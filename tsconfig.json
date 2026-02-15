@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    "allowJs": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+
+    "incremental": true,
+
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "types": ["vite-plugin-svgr/client"],
+  "include": ["src", "**/*.ts", "**/*.tsx", "global.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

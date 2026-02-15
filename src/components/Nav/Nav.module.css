@@ -1,0 +1,63 @@
+.wrapper {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.list {
+  position: absolute;
+  left: var(--gutter);
+  bottom: var(--gutter);
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1.2rem;
+  list-style: none;
+}
+
+.item {
+  width: 1.8rem;
+  height: 1.8rem;
+  pointer-events: auto;
+  cursor: pointer;
+  border-radius: 2px;
+  position: relative;
+}
+
+.item.openInfo svg path {
+  stroke: var(--green-color);
+}
+
+.item a {
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+  position: absolute;
+  inset: 0;
+}
+
+.item svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.item svg path {
+  stroke: var(--text-color);
+  transition: stroke 0.4s ease;
+}
+
+.item:hover svg path {
+  stroke: var(--green-color);
+}
+
+@media only screen and (max-width: 768px) {
+  .item svg {
+    width: 22px;
+    height: 22px;
+  }
+}
