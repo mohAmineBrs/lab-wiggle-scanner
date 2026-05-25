@@ -39,7 +39,7 @@ const Nav = () => {
         </li>
         <li className={s.item}>
           <a
-            href="https://github.com/mohAmineBrs/lab-boilerplate"
+            href="https://github.com/mohAmineBrs/lab-wiggle-scanner"
             target="_blank"
           >
             <Code />

@@ -57,5 +57,20 @@ p {
   top: 0;
   left: 0;
   z-index: 0;
-  background: var(--background-color);
+  background:
+    radial-gradient(
+      ellipse 80% 70% at 50% 50%,
+      rgba(120, 210, 255, 0.25) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      #1a4ab8 0%,
+      #0e2e8f 20%,
+      #08228c 35%,
+      #05106b 52%,
+      #030b4d 68%,
+      #010631 84%,
+      #000214 100%
+    );
 }
