@@ -63,15 +63,15 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
 
   useEffect(() => {
     if (!clone) return
-    clone.scale.set(0.1, 0.1, 0.1)
+    clone.scale.set(0.01, 0.01, 0.01)
 
     if (progress > 99) {
-      animate(0.1, 1, {
+      animate(0.01, 1, {
         duration: 0.6,
         delay: 0.1,
         ease: "backOut",
         onUpdate: (value) => {
-          clone.scale.set(value, mapLinear(value, 0.1, 1, 0.1, 1.2), value)
+          clone.scale.set(value, mapLinear(value, 0.01, 1, 0.01, 1.2), value)
         },
       })
     }

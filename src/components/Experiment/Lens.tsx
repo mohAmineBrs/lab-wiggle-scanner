@@ -1,6 +1,8 @@
 import { useFrame, useThree } from "@react-three/fiber"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import * as THREE from "three"
+import { animate } from "framer-motion"
+import { useProgress } from "@react-three/drei"
 
 import { LensMaterial } from "./LensMaterial"
 
@@ -11,6 +13,8 @@ const Lens = ({ modelRefs }: { modelRefs: React.RefObject<THREE.Mesh[]> }) => {
   const lens = useRef<THREE.Mesh>(null!)
 
   const { gl, size } = useThree()
+
+  const { progress } = useProgress()
 
   const renderTarget = new THREE.WebGLRenderTarget(size.width, size.height, {
     format: THREE.RGBAFormat,
@@ -52,6 +56,22 @@ const Lens = ({ modelRefs }: { modelRefs: React.RefObject<THREE.Mesh[]> }) => {
     gl.setClearColor(prevClearColor, prevClearAlpha)
     gl.setRenderTarget(null)
   })
+
+  useEffect(() => {
+    if (!lens.current) return
+    lens.current.scale.set(0, 0, 0)
+
+    if (progress > 99) {
+      animate(0, 1, {
+        duration: 0.8,
+        delay: 0.5,
+        ease: "backOut",
+        onUpdate: (value) => {
+          lens.current.scale.set(value, value, value)
+        },
+      })
+    }
+  }, [progress])
 
   return (
     <mesh ref={lens} position={[0, 0, 2]}>

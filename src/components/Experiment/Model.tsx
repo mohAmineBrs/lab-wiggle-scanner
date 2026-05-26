@@ -59,12 +59,12 @@ const Model = ({
 
   useEffect(() => {
     if (!clone) return
-    clone.scale.set(0.1, 0.1, 0.1)
+    clone.scale.set(0.001, 0.001, 0.001)
     clone.rotation.y = Math.PI / 2
     clone.rotation.z = Math.PI / 2
 
     if (progress > 99) {
-      animate(0.1, 1.2, {
+      animate(0.001, 1.2, {
         duration: 0.6,
         delay: 0.2,
         ease: "backOut",
