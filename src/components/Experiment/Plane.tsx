@@ -3,8 +3,10 @@ import { useEffect, useRef, useState } from "react"
 import { WiggleBone } from "wiggle"
 import * as THREE from "three"
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js"
-import { useGLTF } from "@react-three/drei"
+import { useGLTF, useProgress } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
+import { animate } from "framer-motion"
+import { mapLinear } from "three/src/math/MathUtils.js"
 
 import { PlaneMaterial } from "./PlaneMaterial"
 
@@ -18,8 +20,12 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
   const wiggleBones = useRef<any[]>([])
   const [clonedScene, setClonedScene] = useState<THREE.Group | null>(null)
 
+  const { progress } = useProgress()
+
+  let clone: THREE.Group
+
   useEffect(() => {
-    const clone = SkeletonUtils.clone(scene) as THREE.Group
+    clone = SkeletonUtils.clone(scene) as THREE.Group
     const nodes: { [key: string]: any } = {}
 
     clone.traverse((obj: any) => {
@@ -29,7 +35,6 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
     const mesh = nodes["Plane"] as THREE.SkinnedMesh
     mesh.userData.isPlane = true
     skinnedMesh.current = mesh
-    clone.scale.set(1, 1.2, 1)
     clone.position.set(0, 0, -0.35)
 
     const material = new PlaneMaterial()
@@ -55,6 +60,22 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
       wiggleBones.current = []
     }
   }, [scene])
+
+  useEffect(() => {
+    if (!clone) return
+    clone.scale.set(0.1, 0.1, 0.1)
+
+    if (progress > 99) {
+      animate(0.1, 1, {
+        duration: 0.6,
+        delay: 0.1,
+        ease: "backOut",
+        onUpdate: (value) => {
+          clone.scale.set(value, mapLinear(value, 0.1, 1, 0.1, 1.2), value)
+        },
+      })
+    }
+  }, [progress])
 
   useFrame((_, delta) => {
     if (!clonedScene) return

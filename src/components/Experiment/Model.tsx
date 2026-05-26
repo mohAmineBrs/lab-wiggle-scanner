@@ -4,8 +4,9 @@ import { WiggleBone } from "wiggle"
 import * as THREE from "three"
 import * as SkeletonUtils from "three/addons/utils/SkeletonUtils.js"
 
-import { useGLTF } from "@react-three/drei"
+import { useGLTF, useProgress } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
+import { animate } from "framer-motion"
 
 const Model = ({
   url,
@@ -23,8 +24,12 @@ const Model = ({
   const wiggleBones = useRef<any[]>([])
   const [clonedScene, setClonedScene] = useState<THREE.Group | null>(null)
 
+  const { progress } = useProgress()
+
+  let clone: THREE.Group
+
   useEffect(() => {
-    const clone = SkeletonUtils.clone(scene) as THREE.Group
+    clone = SkeletonUtils.clone(scene) as THREE.Group
     const nodes: { [key: string]: any } = {}
 
     clone.traverse((obj: any) => {
@@ -34,7 +39,6 @@ const Model = ({
     const mesh = nodes["model"] as THREE.SkinnedMesh
     skinnedMesh.current = mesh
     modelRefs.current[cardIndex] = mesh
-    clone.scale.set(1.2, 1.2, 1.2)
 
     mesh.skeleton.bones.forEach((bone: any) => {
       if (!bone.parent.isBone) {
@@ -52,6 +56,33 @@ const Model = ({
       wiggleBones.current = []
     }
   }, [scene])
+
+  useEffect(() => {
+    if (!clone) return
+    clone.scale.set(0.1, 0.1, 0.1)
+    clone.rotation.y = Math.PI / 2
+    clone.rotation.z = Math.PI / 2
+
+    if (progress > 99) {
+      animate(0.1, 1.2, {
+        duration: 0.6,
+        delay: 0.2,
+        ease: "backOut",
+        onUpdate: (value) => {
+          clone.scale.set(value, value, value)
+        },
+      })
+      animate(Math.PI / 2, 0, {
+        duration: 0.8,
+        delay: 0.2,
+        ease: "backOut",
+        onUpdate: (value) => {
+          clone.rotation.y = value
+          clone.rotation.z = value
+        },
+      })
+    }
+  }, [progress])
 
   useFrame((_, delta) => {
     if (!clonedScene) return

@@ -81,7 +81,7 @@ function Card({
   return (
     <group ref={meshRef} scale={1.2}>
       <Plane bgColor={bgColor} index={index} />
-      <Model url={model} modelRefs={modelRefs} cardIndex={index} />{" "}
+      <Model url={model} modelRefs={modelRefs} cardIndex={index} />
     </group>
   )
 }
