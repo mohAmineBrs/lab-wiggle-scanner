@@ -4,6 +4,9 @@ import * as THREE from "three"
 
 import { LensMaterial } from "./LensMaterial"
 
+const LENS_WIDTH = 2
+const LENS_HEIGHT = 3
+
 const Lens = ({ modelRefs }: { modelRefs: React.RefObject<THREE.Mesh[]> }) => {
   const lens = useRef<THREE.Mesh>(null!)
 
@@ -21,7 +24,7 @@ const Lens = ({ modelRefs }: { modelRefs: React.RefObject<THREE.Mesh[]> }) => {
     modelRefs.current.forEach((mesh: THREE.Mesh) => {
       if (!mesh) return
       mesh.material = new THREE.MeshBasicMaterial({
-        color: "#00ff00",
+        color: "#2cff05",
         wireframe: true,
       })
     })
@@ -52,7 +55,7 @@ const Lens = ({ modelRefs }: { modelRefs: React.RefObject<THREE.Mesh[]> }) => {
 
   return (
     <mesh ref={lens} position={[0, 0, 2]}>
-      <planeGeometry args={[2, 3]} />
+      <planeGeometry args={[LENS_WIDTH, LENS_HEIGHT]} />
       {/* @ts-ignore */}
       <lensMaterial
         key={LensMaterial.key}
@@ -61,6 +64,7 @@ const Lens = ({ modelRefs }: { modelRefs: React.RefObject<THREE.Mesh[]> }) => {
           size.width * gl.getPixelRatio(),
           size.height * gl.getPixelRatio(),
         ]}
+        uAspect={LENS_HEIGHT / LENS_WIDTH}
       />
     </mesh>
   )
