@@ -104,9 +104,7 @@ const Slider = () => {
       velocityRef.current -= e.deltaY * 0.0005
       autoSpeedRef.current = 0
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current)
-      scrollTimeout.current = setTimeout(() => {
-        autoSpeedRef.current = AUTO_SPEED
-      }, 500)
+      autoSpeedRef.current = AUTO_SPEED
     }
     window.addEventListener("wheel", onScroll, { passive: true })
     return () => {
