@@ -81,7 +81,7 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
 
   useFrame((_, delta) => {
     if (!clonedScene) return
-    const clampedDelta = Math.min(delta, 1 / 30)
+    const clampedDelta = Math.min(delta, 0.05)
     wiggleBones.current.forEach((wb: any) => wb.update(clampedDelta))
   })
 

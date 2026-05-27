@@ -30,11 +30,10 @@ const dataArray = [
 ]
 const COUNT = dataArray.length
 
-const SPACING = 3.2
+const SPACING = 3.3
 const TOTAL_WIDTH = COUNT * SPACING
-const CURVE_AMPLITUDE = 0.6
-const CURVE_WAVES = 2
-const CURVE_FREQUENCY = (Math.PI * 2 * CURVE_WAVES) / TOTAL_WIDTH
+const CIRCLE_RADIUS = 10
+const CIRCLE_CENTER_Y = -10
 const AUTO_SPEED = 1
 
 function Card({
@@ -64,18 +63,19 @@ function Card({
     while (rawPos < -TOTAL_WIDTH / 2) rawPos += TOTAL_WIDTH
     while (rawPos > TOTAL_WIDTH / 2) rawPos -= TOTAL_WIDTH
 
-    const curveY = Math.sin(rawPos * CURVE_FREQUENCY) * CURVE_AMPLITUDE
-    const y = curveY + Math.sin(time * 0.8 + index * 0.25) * 0.05
+    const angle = rawPos / CIRCLE_RADIUS
 
-    meshRef.current.position.set(rawPos, y, 0)
+    const x = Math.sin(angle) * CIRCLE_RADIUS
+    const y =
+      CIRCLE_CENTER_Y +
+      Math.cos(angle) * CIRCLE_RADIUS +
+      Math.sin(time * 0.8 + index * 0.25) * 0.04
 
-    const normalizedDist = Math.abs(rawPos) / (TOTAL_WIDTH / 2)
-    const targetRotY =
-      Math.sign(rawPos) * Math.PI * 0.5 * Math.min(normalizedDist * 2, 1)
+    meshRef.current.position.set(x, y, 0)
 
-    const lerpSpeed = Math.min(Math.abs(velocityRef.current) * 0.4 + 0.08, 1)
-    rotationsRef.current[index] +=
-      (targetRotY - rotationsRef.current[index]) * lerpSpeed
+    const scaleFactor = Math.max(0.3, Math.exp(-Math.pow(angle, 2) * 0.6))
+
+    meshRef.current.scale.setScalar(1.2 * scaleFactor)
   })
 
   return (
