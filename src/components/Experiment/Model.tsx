@@ -26,10 +26,8 @@ const Model = ({
 
   const { progress } = useProgress()
 
-  let clone: THREE.Group
-
   useEffect(() => {
-    clone = SkeletonUtils.clone(scene) as THREE.Group
+    const clone = SkeletonUtils.clone(scene) as THREE.Group
     const nodes: { [key: string]: any } = {}
 
     clone.traverse((obj: any) => {
@@ -58,10 +56,10 @@ const Model = ({
   }, [scene])
 
   useEffect(() => {
-    if (!clone) return
-    clone.scale.set(0.001, 0.001, 0.001)
-    clone.rotation.y = Math.PI / 2
-    clone.rotation.z = Math.PI / 2
+    if (!clonedScene) return
+    clonedScene.scale.set(0.001, 0.001, 0.001)
+    clonedScene.rotation.y = Math.PI / 2
+    clonedScene.rotation.z = Math.PI / 2
 
     if (progress > 99) {
       animate(0.001, 1.2, {
@@ -69,7 +67,7 @@ const Model = ({
         delay: 0.2,
         ease: "backOut",
         onUpdate: (value) => {
-          clone.scale.set(value, value, value)
+          clonedScene.scale.set(value, value, value)
         },
       })
       animate(Math.PI / 2, 0, {
@@ -77,12 +75,12 @@ const Model = ({
         delay: 0.2,
         ease: "backOut",
         onUpdate: (value) => {
-          clone.rotation.y = value
-          clone.rotation.z = value
+          clonedScene.rotation.y = value
+          clonedScene.rotation.z = value
         },
       })
     }
-  }, [progress])
+  }, [progress, clonedScene])
 
   useFrame((_, delta) => {
     if (!clonedScene) return

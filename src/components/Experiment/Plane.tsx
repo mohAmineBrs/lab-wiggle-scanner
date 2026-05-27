@@ -22,10 +22,8 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
 
   const { progress } = useProgress()
 
-  let clone: THREE.Group
-
   useEffect(() => {
-    clone = SkeletonUtils.clone(scene) as THREE.Group
+    const clone = SkeletonUtils.clone(scene) as THREE.Group
     const nodes: { [key: string]: any } = {}
 
     clone.traverse((obj: any) => {
@@ -62,8 +60,8 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
   }, [scene])
 
   useEffect(() => {
-    if (!clone) return
-    clone.scale.set(0.01, 0.01, 0.01)
+    if (!clonedScene) return
+    clonedScene.scale.set(0.01, 0.01, 0.01)
 
     if (progress > 99) {
       animate(0.01, 1, {
@@ -71,11 +69,15 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
         delay: 0.1,
         ease: "backOut",
         onUpdate: (value) => {
-          clone.scale.set(value, mapLinear(value, 0.01, 1, 0.01, 1.2), value)
+          clonedScene.scale.set(
+            value,
+            mapLinear(value, 0.01, 1, 0.01, 1.2),
+            value,
+          )
         },
       })
     }
-  }, [progress])
+  }, [progress, clonedScene])
 
   useFrame((_, delta) => {
     if (!clonedScene) return
