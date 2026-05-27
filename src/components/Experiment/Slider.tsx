@@ -130,9 +130,7 @@ const Slider = () => {
 
   const handlePointerUp = useCallback(() => {
     isDragging.current = false
-    setTimeout(() => {
-      autoSpeedRef.current = AUTO_SPEED
-    }, 500)
+    autoSpeedRef.current = AUTO_SPEED
   }, [])
 
   useFrame((_, delta) => {
