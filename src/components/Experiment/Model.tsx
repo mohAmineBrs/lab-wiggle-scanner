@@ -64,7 +64,7 @@ const Model = ({
     if (progress > 99) {
       animate(0.001, 1.2, {
         duration: 0.6,
-        delay: 0.2,
+        delay: 0.1,
         ease: "backOut",
         onUpdate: (value) => {
           clonedScene.scale.set(value, value, value)
@@ -72,7 +72,7 @@ const Model = ({
       })
       animate(Math.PI / 2, 0, {
         duration: 0.8,
-        delay: 0.2,
+        delay: 0.1,
         ease: "backOut",
         onUpdate: (value) => {
           clonedScene.rotation.y = value

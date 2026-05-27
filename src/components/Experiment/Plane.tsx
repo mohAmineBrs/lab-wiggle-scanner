@@ -66,7 +66,7 @@ const Plane = ({ bgColor, index }: { bgColor: string; index: number }) => {
     if (progress > 99) {
       animate(0.01, 1, {
         duration: 0.6,
-        delay: 0.1,
+        delay: 0.25,
         ease: "backOut",
         onUpdate: (value) => {
           clonedScene.scale.set(
