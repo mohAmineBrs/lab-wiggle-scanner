@@ -74,7 +74,7 @@ const Lens = ({ modelRefs }: { modelRefs: React.RefObject<THREE.Mesh[]> }) => {
   }, [progress])
 
   return (
-    <mesh ref={lens} position={[0, 0, 2]}>
+    <mesh ref={lens} position={[0, 0, 2]} scale={0}>
       <planeGeometry args={[LENS_WIDTH, LENS_HEIGHT]} />
       {/* @ts-ignore */}
       <lensMaterial
