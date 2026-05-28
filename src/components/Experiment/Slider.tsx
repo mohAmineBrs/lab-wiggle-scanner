@@ -42,7 +42,7 @@ function Card({
   model,
   offsetRef,
   velocityRef,
-  rotationsRef,
+
   modelRefs,
 }: {
   index: number
@@ -50,7 +50,6 @@ function Card({
   model: any
   offsetRef: React.RefObject<number>
   velocityRef: React.RefObject<number>
-  rotationsRef: React.RefObject<Float32Array>
   modelRefs: React.RefObject<THREE.Mesh[]>
 }) {
   const meshRef = useRef<THREE.Mesh>(null!)
@@ -92,7 +91,6 @@ const Slider = () => {
   const isDragging = useRef(false)
   const lastPointerX = useRef(0)
   const autoSpeedRef = useRef(AUTO_SPEED)
-  const rotationsRef = useRef(new Float32Array(COUNT))
   const scrollTimeout = useRef<any>(null)
 
   const modelRefs = useRef<THREE.Mesh[]>(Array(COUNT).fill(null))
@@ -168,7 +166,6 @@ const Slider = () => {
           model={item.model}
           offsetRef={offsetRef}
           velocityRef={velocityRef}
-          rotationsRef={rotationsRef}
           modelRefs={modelRefs}
         />
       ))}
