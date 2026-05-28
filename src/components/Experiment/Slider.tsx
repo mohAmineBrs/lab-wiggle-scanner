@@ -34,7 +34,7 @@ const SPACING = 3.3
 const TOTAL_WIDTH = COUNT * SPACING
 const CIRCLE_RADIUS = 10
 const CIRCLE_CENTER_Y = -10
-const AUTO_SPEED = 1
+const AUTO_SPEED = 0.25
 
 function Card({
   index,
@@ -132,7 +132,7 @@ const Slider = () => {
   }, [])
 
   useFrame((_, delta) => {
-    const dt = Math.min(delta, 0.05)
+    const dt = Math.max(delta, 0.05)
     if (!isDragging.current) {
       velocityRef.current +=
         (-autoSpeedRef.current * dt - velocityRef.current) * 0.05
