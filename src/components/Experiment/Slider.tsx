@@ -41,15 +41,12 @@ function Card({
   bgColor,
   model,
   offsetRef,
-  velocityRef,
-
   modelRefs,
 }: {
   index: number
   bgColor: string
-  model: any
+  model: string
   offsetRef: React.RefObject<number>
-  velocityRef: React.RefObject<number>
   modelRefs: React.RefObject<THREE.Mesh[]>
 }) {
   const meshRef = useRef<THREE.Mesh>(null!)
@@ -91,34 +88,31 @@ const Slider = () => {
   const isDragging = useRef(false)
   const lastPointerX = useRef(0)
   const autoSpeedRef = useRef(AUTO_SPEED)
-  const scrollTimeout = useRef<any>(null)
 
   const modelRefs = useRef<THREE.Mesh[]>(Array(COUNT).fill(null))
 
   const { viewport } = useThree()
 
   useEffect(() => {
-    const onScroll = (e: any) => {
+    const onScroll = (e: WheelEvent) => {
       velocityRef.current -= e.deltaY * 0.0005
       autoSpeedRef.current = 0
-      if (scrollTimeout.current) clearTimeout(scrollTimeout.current)
       autoSpeedRef.current = AUTO_SPEED
     }
     window.addEventListener("wheel", onScroll, { passive: true })
     return () => {
       window.removeEventListener("wheel", onScroll)
-      if (scrollTimeout.current) clearTimeout(scrollTimeout.current)
     }
   }, [])
 
-  const handlePointerDown = useCallback((e: any) => {
+  const handlePointerDown = useCallback((e: PointerEvent) => {
     e.stopPropagation()
     isDragging.current = true
     lastPointerX.current = e.clientX ?? 0
     autoSpeedRef.current = 0
   }, [])
 
-  const handlePointerMove = useCallback((e: any) => {
+  const handlePointerMove = useCallback((e: PointerEvent) => {
     if (!isDragging.current) return
     const clientX = e.clientX ?? 0
     const delta = clientX - lastPointerX.current
@@ -165,7 +159,6 @@ const Slider = () => {
           bgColor={item.color}
           model={item.model}
           offsetRef={offsetRef}
-          velocityRef={velocityRef}
           modelRefs={modelRefs}
         />
       ))}
